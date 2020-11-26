@@ -5,3 +5,4 @@ Uma rede social desenvolvida com VueJs no front e APIs no Laravel para o back en
 
  - [ ] Laravel
  - [ ] VueJs
+ - [ ] Materialize

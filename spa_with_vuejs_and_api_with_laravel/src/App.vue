@@ -1,13 +1,13 @@
 <template>
   <span id="app">
     <header>
-      <nav-bar background='green'/>
+      <nav-bar background="green"/>
     </header>
     <main>
       <router-view />
     </main>
     <!-- footer --->
-      <footer-vue background='green'>
+      <footer-vue background="green">
         <li><a class="grey-text text-lighten-3" href="#!">Social</a></li>
             <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
             <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
@@ -20,6 +20,7 @@
 <script>
 import NavBar from "@/components/NavBar";
 import FooterVue from "@/components/FooterVue.vue";
+
 
 export default {
   name: "App",

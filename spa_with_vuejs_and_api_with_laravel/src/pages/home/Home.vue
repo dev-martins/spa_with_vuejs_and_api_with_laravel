@@ -1,55 +1,71 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <grid-vue width="s4">
-        <div class="card-panel grey lighten-5 z-depth-1">
-          <div class="row valign-wrapper">
-            <div class="col s4">
-              <img src="https://materializecss.com/images/yuna.jpg" alt="" class="circle responsive-img" />
+  <SiteLayout>
+    <div class="container">
+      <div class="row">
+        <GridVue width="4">
+          <CardMenuVue background="grey lighten-5 z-depth-1">
+            <GridVue width="4">
+              <img
+                src="https://materializecss.com/images/yuna.jpg"
+                alt=""
+                class="circle responsive-img"
+              />
               <!-- notice the "circle" class -->
-            </div>
-            <div class="col s8">
+            </GridVue>
+            <GridVue width="8">
               <h5>Marta Silva</h5>
               <span class="black-text">
                 This is a square image. Add the "circle" class to it to make it
                 appear circular.
               </span>
-            </div>
+            </GridVue>
+          </CardMenuVue>
+        </GridVue>
+        <GridVue width="8">
+          <div class="row">
+            <GridVue class="input-field" width="12">
+              <PublicContentVue />
+            </GridVue>
           </div>
-        </div>
-      </grid-vue>
-      <grid-vue width="s8">
-        <h1>Social</h1>
-        <div class="row">
-          <div class="col s12 m6">
-            <div class="card blue-grey darken-1">
-              <div class="card-content white-text">
-                <span class="card-title">Card Title</span>
-                <p>
-                  I am a very simple card. I am good at containing small bits of
-                  information. I am convenient because I require little markup
-                  to use effectively.
-                </p>
-              </div>
-              <div class="card-action">
-                <a href="#">This is a link</a>
-                <a href="#">This is a link</a>
-              </div>
-            </div>
+          <div class="row">
+            <GridVue width="12">
+              <CardContentVue
+                image="https://materializecss.com/images/sample-1.jpg"
+                name="Marta Silva"
+                date_publish="28/11/2020 16:40"
+              >
+                <CardDetalhesVue
+                  image_content="https://materializecss.com/images/sample-1.jpg"
+                  content_title="Lorem ipsum dolor sit amet"
+                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas venenatis ligula sit amet luctus. Ut consequat non turpis ac tincidunt."
+                >
+                </CardDetalhesVue>
+              </CardContentVue>
+            </GridVue>
           </div>
-        </div>
-      </grid-vue>
+        </GridVue>
+      </div>
     </div>
-  </div>
+  </SiteLayout>
 </template>
 
 <script>
+import SiteLayout from "@/layouts/SiteLayout.vue";
 import GridVue from "@/components/GridVue.vue";
+import CardMenuVue from "@/components/CardMenuVue.vue";
+import CardContentVue from "@/components/social/CardContentVue.vue";
+import CardDetalhesVue from "@/components/social/CardDetalhesVue.vue";
+import PublicContentVue from "@/components/social/PublicContentVue.vue";
 
 export default {
   name: "HelloWorld",
   components: {
+    SiteLayout,
     GridVue,
+    CardMenuVue,
+    CardContentVue,
+    CardDetalhesVue,
+    PublicContentVue,
   },
   data() {
     return {

@@ -1,17 +1,27 @@
 <template>
   <LoginLayout>
     <div class="container">
-      <div class="row">
-        <GridVue width="6">
+      <div class="row valign-wrapper">
+        <GridVue width="6" >
           <CardMenuVue>
             <img class="responsive-img" src="@/assets/social/login.jpg"/>
           </CardMenuVue>
         </GridVue>
-        <GridVue width="6">
+        <GridVue v-if="register" width="6" >
           <h3>Login</h3>
           <input placeholder="Email" type="text" class="validate">
           <input placeholder="Senha" type="text" class="validate">
-          <a class="waves-effect waves-light btn col s3 offset-s9">Entrar</a>
+          <a class="waves-effect waves-light btn col s4">Entrar</a>
+          <a class="waves-effect waves-light btn col s4 orange" @click="register = false">Cadastre-se</a>
+        </GridVue>
+        <GridVue v-if="!register" width="6" >
+          <h3>Cadastro</h3>
+          <input placeholder="Nome" type="text" class="validate">
+          <input placeholder="Email" type="text" class="validate">
+          <input placeholder="Senha" type="text" class="validate">
+          <input placeholder="Confirme senha" type="text" class="validate">
+          <a class="waves-effect waves-light btn col s3">Enviar</a>
+          <a class="waves-effect waves-light btn col s4 orange" @click="register = true">Já tenho conta</a>
         </GridVue>
       </div>
     </div>
@@ -38,7 +48,7 @@ export default {
   },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
+      register:true,
     };
   },
 };

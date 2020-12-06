@@ -3,7 +3,9 @@
     <div class="container">
       <div class="row">
         <GridVue width="6">
-          Left
+          <CardMenuVue>
+            <img class="responsive-img" src="@/assets/social/login.jpg"/>
+          </CardMenuVue>
         </GridVue>
         <GridVue width="6">
           <h3>Login</h3>

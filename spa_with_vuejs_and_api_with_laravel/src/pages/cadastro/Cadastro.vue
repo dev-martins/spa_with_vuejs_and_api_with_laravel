@@ -4,15 +4,17 @@
       <div class="row valign-wrapper">
         <GridVue width="6" >
           <CardMenuVue>
-            <img class="responsive-img" src="@/assets/social/login.jpg"/>
+            <img class="responsive-img" src="@/assets/social/register.jpg"/>
           </CardMenuVue>
         </GridVue>
         <GridVue width="6" >
-          <h3>Login</h3>
+          <h3>Cadastro</h3>
+          <input placeholder="Nome" type="text" class="validate">
           <input placeholder="Email" type="text" class="validate">
           <input placeholder="Senha" type="text" class="validate">
-          <a class="waves-effect waves-light btn col s4">Entrar</a>
-          <router-link class="waves-effect waves-light btn col s4 orange offset-s1" to="/cadastro">Cadastre-se</router-link>
+          <input placeholder="Confirme senha" type="text" class="validate">
+          <a class="waves-effect waves-light btn col s3">Enviar</a>
+          <router-link class="waves-effect waves-light btn col s4 orange offset-s1" to="/login">Já tenho conta</router-link>
         </GridVue>
       </div>
     </div>

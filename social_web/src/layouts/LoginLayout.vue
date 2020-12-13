@@ -1,7 +1,7 @@
 <template>
   <span  id="app">
     <header>
-      <nav-bar background="green">
+      <nav-bar background="blue">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/login">Login</router-link></li>
         <li><router-link to="/cadastro">Cadastre-se</router-link></li>
@@ -11,7 +11,7 @@
       <slot/>
     </main>
     <!-- footer --->
-    <footer-vue background="green">
+    <footer-vue background="blue">
       <li><a class="grey-text text-lighten-3" href="#!">Social</a></li>
       <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
       <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>

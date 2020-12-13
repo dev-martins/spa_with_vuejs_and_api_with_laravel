@@ -2,17 +2,26 @@
   <LoginLayout>
     <div class="container">
       <div class="row valign-wrapper">
-        <GridVue width="6" >
+        <GridVue width="6">
           <CardMenuVue>
-            <img class="responsive-img" src="@/assets/social/login.jpg"/>
+            <img class="responsive-img" src="@/assets/social/login.jpg" />
           </CardMenuVue>
         </GridVue>
-        <GridVue width="6" >
+        <GridVue width="6">
           <h3>Login</h3>
-          <input placeholder="Email" type="text" class="validate">
-          <input placeholder="Senha" type="text" class="validate">
-          <a class="waves-effect waves-light btn col s4">Entrar</a>
-          <router-link class="waves-effect waves-light btn col s4 orange offset-s1" to="/cadastro">Cadastre-se</router-link>
+          <input placeholder="Email" type="email" class="validate" v-model="email" />
+          <input
+            placeholder="Senha"
+            type="password"
+            class="validate"
+            v-model="password"
+          />
+          <button type="button" class="waves-effect waves-light btn col s4" @click="login()">Entrar</button>
+          <router-link
+            class="waves-effect waves-light btn col s4 orange offset-s1"
+            to="/cadastro"
+            >Cadastre-se</router-link
+          >
         </GridVue>
       </div>
     </div>
@@ -20,8 +29,8 @@
 </template>
 
 <style>
-.btn{
-  margin-top:5px;
+.btn {
+  margin-top: 5px;
 }
 </style>
 <script>
@@ -31,6 +40,12 @@ import CardMenuVue from "@/components/CardMenuVue.vue";
 import CardContentVue from "@/components/social/CardContentVue.vue";
 import CardDetalhesVue from "@/components/social/CardDetalhesVue.vue";
 import PublicContentVue from "@/components/social/PublicContentVue.vue";
+
+import axios from "axios";
+import Vue from 'vue';
+import VueToast from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
+Vue.use(VueToast);
 
 export default {
   name: "HelloWorld",
@@ -44,11 +59,36 @@ export default {
   },
   data() {
     return {
+      email: "",
+      password: "",
     };
+  },
+  methods: {
+    login: function () {
+      axios
+        .post(`http://127.0.0.1:8000/api/v1/users/login`, {
+          email: this.email,
+          password:this.password
+        })
+        .then((response) => {
+          //this.posts = response.data;
+          Vue.$toast.open({
+            message: `Bem vindo ${response.data.name}!`,
+            type: "success",
+            position: "top-right",
+          });
+        })
+        .catch((e) => {
+          Vue.$toast.open({
+            message: e.message,
+            type: "error",
+            position: "top-right",
+          });
+        });
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

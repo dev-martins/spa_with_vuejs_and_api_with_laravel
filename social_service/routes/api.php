@@ -20,9 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1/users')->namespace('App\Http\Controllers\Api')->group(function(){
     Route::post('/login','UserController@login')->name('login');
-    Route::middleware('auth:api')->group(function(){
-    });
-    
     Route::get('','UserController@getAllUsers')->name('getAllUsers');
     Route::post('','UserController@createUser')->name('createUser');
     Route::put('{id}','UserController@updateUser')->name('updateUser');

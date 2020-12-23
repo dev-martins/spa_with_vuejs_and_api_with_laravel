@@ -16,7 +16,13 @@
             class="validate"
             v-model="password"
           />
-          <button type="button" class="waves-effect waves-light btn col s4" @click="login()">Entrar</button>
+          <button
+            type="button"
+            class="waves-effect waves-light btn col s4"
+            @click="login()"
+          >
+            Entrar
+          </button>
           <router-link
             class="waves-effect waves-light btn col s4 orange offset-s1"
             to="/cadastro"
@@ -42,9 +48,9 @@ import CardDetalhesVue from "@/components/social/CardDetalhesVue.vue";
 import PublicContentVue from "@/components/social/PublicContentVue.vue";
 
 import axios from "axios";
-import Vue from 'vue';
-import VueToast from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';
+import Vue from "vue";
+import VueToast from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
 Vue.use(VueToast);
 
 export default {
@@ -64,14 +70,16 @@ export default {
     };
   },
   methods: {
+    
     login: function () {
       axios
         .post(`http://127.0.0.1:8000/api/v1/users/login`, {
           email: this.email,
-          password:this.password
+          password: this.password,
         })
         .then((response) => {
-          //this.posts = response.data;
+          sessionStorage.setItem("user", JSON.stringify(response.data));
+          this.$router.push('/');
           Vue.$toast.open({
             message: `Bem vindo ${response.data.name}!`,
             type: "success",
@@ -80,7 +88,7 @@ export default {
         })
         .catch((e) => {
           Vue.$toast.open({
-            message: e.message,
+            message: e.response.data.msg,
             type: "error",
             position: "top-right",
           });

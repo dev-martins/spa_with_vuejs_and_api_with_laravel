@@ -10,7 +10,7 @@
         <li v-if="user"><a @click="sair()">Sair</a></li>
       </nav-bar>
     </header>
-    <main style="min-height:400px">
+    <main style="min-height: 400px">
       <slot />
     </main>
     <!-- footer --->
@@ -40,18 +40,21 @@ export default {
     };
   },
   mounted() {
-    let userAuth = sessionStorage.getItem("user");
-    if (userAuth) {
-      this.user = JSON.parse(userAuth);
-    }else{
-      this.$router.push('/login');
-    }
+    this.getUser();
   },
   methods: {
+    getUser: function () {
+      let userAuth = sessionStorage.getItem("user");
+      if (userAuth) {
+        this.user = JSON.parse(userAuth);
+      } else {
+        this.$router.push("/login");
+      }
+    },
     sair() {
       sessionStorage.clear();
       this.user = false;
-      this.$router.push('/login');
+      this.$router.push("/login");
     },
   },
 };

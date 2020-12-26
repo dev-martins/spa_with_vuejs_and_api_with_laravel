@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "vue": "^2.5.2",
+    "vue-axios-cors": "^1.0.1",
     "vue-router": "^3.0.1",
     "vue-toast-notification": "^0.6.0"
   },

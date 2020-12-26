@@ -4,13 +4,23 @@
       <div class="row valign-wrapper">
         <GridVue width="4">
           <CardMenuVue>
-            <img class="responsive-img" src="@/assets/social/avatar.png" />
+            <img v-if="image" class="responsive-img" :src="image" width="100%"/>
+            <img v-else class="responsive-img" src="@/assets/social/avatar.png" />
           </CardMenuVue>
         </GridVue>
         <GridVue width="8">
           <h3>Perfil</h3>
           <input v-model="name" placeholder="Nome" type="text" class="validate" />
           <input v-model="email" placeholder="Email" type="text" class="validate" />
+          <div class="file-field input-field">
+            <div class="btn">
+              <span>Imagem</span>
+              <input type="file"  @change="uploadImage($event)"/>
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text" />
+            </div>
+          </div>
           <input
             v-model="password"
             placeholder="Senha"
@@ -66,41 +76,52 @@ export default {
       name: "",
       email: "",
       password: "",
-      image:"",
+      image: "",
       password_confirmation: "",
+      image: "",
     };
   },
   mounted() {
-      this.getUser();
+    this.getUser();
   },
   methods: {
     getUser: function () {
       let userAuth = sessionStorage.getItem("user");
       if (userAuth) {
         this.user = JSON.parse(userAuth);
-        this.name = this.user.name
-        this.email = this.user.email
-        this.image = this.user.image
+        this.name = this.user.name;
+        this.email = this.user.email;
+        this.image = this.user.image;
       } else {
         this.$router.push("/login");
       }
     },
     updatePerfil: function () {
+      let data = {
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.password_confirmation,
+        image: this.image,
+      };
+      this.removeEmptyAttribute(data);
+
       axios
-        .post(`http://127.0.0.1:8000/api/v1/perfil`, {
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.password_confirmation,
+        .put(`http://127.0.0.1:8000/api/v1/users/perfil`, data, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.user.token}`,
+            "Content-Type": "application/json",
+          },
         })
         .then((response) => {
           sessionStorage.setItem("user", JSON.stringify(response.data));
-          this.$router.push("/");
           Vue.$toast.open({
-            message: `${response.data.name} cadastrado com sucesso!`,
+            message: `${response.data.name} Atualizado com sucesso!`,
             type: "success",
             position: "top-right",
           });
+          this.getUser();
         })
         .catch((e) => {
           let resp = e.response.data.errors;
@@ -112,6 +133,23 @@ export default {
             });
           }
         });
+    },
+    removeEmptyAttribute(objeto) {
+      for (var index in objeto) {
+        if (objeto[index] == "") {
+          delete objeto[index];
+        }
+      }
+
+      return objeto;
+    },
+    uploadImage(e) {
+      const image = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = (e) => {
+        this.image = e.target.result;
+      };
     },
   },
 };

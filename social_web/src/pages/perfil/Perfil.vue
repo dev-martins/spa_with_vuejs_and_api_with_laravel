@@ -79,6 +79,7 @@ export default {
       image: "",
       password_confirmation: "",
       image: "",
+      imagePreview:"",
     };
   },
   mounted() {
@@ -102,7 +103,7 @@ export default {
         email: this.email,
         password: this.password,
         password_confirmation: this.password_confirmation,
-        image: this.image,
+        image: this.imagePreview,
       };
       this.removeEmptyAttribute(data);
 
@@ -115,23 +116,23 @@ export default {
           },
         })
         .then((response) => {
-          sessionStorage.setItem("user", JSON.stringify(response.data));
-          Vue.$toast.open({
-            message: `${response.data.name} Atualizado com sucesso!`,
-            type: "success",
-            position: "top-right",
-          });
-          this.getUser();
+           sessionStorage.setItem("user", JSON.stringify(response.data));
+           Vue.$toast.open({
+             message: `${response.data.name} Atualizado com sucesso!`,
+             type: "success",
+             position: "top-right",
+           });
+           this.getUser();
         })
         .catch((e) => {
-          let resp = e.response.data.errors;
-          for (let key in resp) {
-            Vue.$toast.open({
-              message: resp[key],
-              type: "error",
-              position: "top-right",
-            });
-          }
+           let resp = e.response.data.errors;
+           for (let key in resp) {
+             Vue.$toast.open({
+               message: resp[key],
+               type: "error",
+               position: "top-right",
+             });
+           }
         });
     },
     removeEmptyAttribute(objeto) {
@@ -148,7 +149,7 @@ export default {
       const reader = new FileReader();
       reader.readAsDataURL(image);
       reader.onload = (e) => {
-        this.image = e.target.result;
+        this.imagePreview = e.target.result;
       };
     },
   },

@@ -51,14 +51,16 @@ class UserController extends Controller
             if (!is_null($request->input('password'))) {
                 Arr::set($request, 'password', bcrypt($request->input('password')));
             }
-
-            $this->uploadFile($request->image, $user);
+            if ($request->image) {
+                $this->uploadFile($request->image, $user);
+            }
 
             foreach ($request->input() as $key => $value) {
                 $user->$key = $value;
             }
-
-            $user->image = $this->pathImage;
+            if ($request->image) {
+                $user->image = asset('storage' . DIRECTORY_SEPARATOR . $this->pathImage);
+            }
             $user->update();
             $user->token = $user->createToken($user->email)->accessToken;
             return response()->json($user, 200);
@@ -69,6 +71,7 @@ class UserController extends Controller
 
     public function uploadFile($file, $user)
     {
+        // receber a tratar arquivo base64
         $separator = DIRECTORY_SEPARATOR;
         $time = time();
         $pathDad = 'perfils';
@@ -79,11 +82,19 @@ class UserController extends Controller
         $file = str_replace('data:image/' . $extension . ';base64,', '', $file);
         $file = base64_decode($file);
 
-        if (!file_exists($pathDad)) {
-            mkdir($pathDad, 0777);
-        }
+        // verificar se arquivo existe e deletar
+        $this->checkIfTheFileExistsAndDelete($user);
 
         Storage::disk('public')->put($path, $file);
         return $this->pathImage = $path;
+    }
+
+    public function checkIfTheFileExistsAndDelete($user)
+    {
+        $image = explode(DIRECTORY_SEPARATOR, $user->image);
+        $index = array_key_last($image);
+        if (Storage::disk('public')->exists("./perfils/perfil_id/{$user->id}/")) {
+            Storage::disk('public')->delete("./perfils/perfil_id/{$user->id}/{$image[$index]}");
+        };
     }
 }

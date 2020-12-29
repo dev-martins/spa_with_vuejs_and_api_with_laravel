@@ -6,18 +6,14 @@
           <CardMenuVue background="grey lighten-5 z-depth-1">
             <GridVue width="4">
               <img
-                src="https://materializecss.com/images/yuna.jpg"
-                alt=""
+                :src="image"
+                :alt="name"
                 class="circle responsive-img"
               />
               <!-- notice the "circle" class -->
             </GridVue>
             <GridVue width="8">
-              <h5>Marta Silva</h5>
-              <span class="black-text">
-                This is a square image. Add the "circle" class to it to make it
-                appear circular.
-              </span>
+              <h5>{{name}}</h5>
             </GridVue>
           </CardMenuVue>
         </GridVue>
@@ -69,8 +65,24 @@ export default {
   },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App",
+      name:"",
+      image:"",
     };
+  },
+  mounted(){
+    this.getUser();
+  },
+  methods: {
+    getUser: function () {
+      let userAuth = sessionStorage.getItem("user");
+      if (userAuth) {
+        this.user = JSON.parse(userAuth);
+        this.name = this.user.name;
+        this.image = this.user.image;
+      } else {
+        this.$router.push("/login");
+      }
+    }
   },
 };
 </script>

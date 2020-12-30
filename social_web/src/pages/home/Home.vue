@@ -5,15 +5,12 @@
         <GridVue width="4">
           <CardMenuVue background="grey lighten-5 z-depth-1">
             <GridVue width="4">
-              <img
-                :src="image"
-                :alt="name"
-                class="circle responsive-img"
-              />
+              <img v-if="image" class="circle responsive-img" :src="image" :alt="name" />
+              <img v-else class="circle responsive-img" src="@/assets/social/avatar.png" />
               <!-- notice the "circle" class -->
             </GridVue>
             <GridVue width="8">
-              <h5>{{name}}</h5>
+              <h5>{{ name }}</h5>
             </GridVue>
           </CardMenuVue>
         </GridVue>
@@ -65,11 +62,11 @@ export default {
   },
   data() {
     return {
-      name:"",
-      image:"",
+      name: "",
+      image: "",
     };
   },
-  mounted(){
+  mounted() {
     this.getUser();
   },
   methods: {
@@ -82,11 +79,10 @@ export default {
       } else {
         this.$router.push("/login");
       }
-    }
+    },
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-</style>
+<style scoped></style>

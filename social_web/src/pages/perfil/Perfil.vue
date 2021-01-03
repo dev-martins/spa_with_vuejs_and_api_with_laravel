@@ -150,6 +150,7 @@ export default {
       reader.readAsDataURL(image);
       reader.onload = (e) => {
         this.imagePreview = e.target.result;
+        console.log(this.imagePreview);
       };
     },
   },

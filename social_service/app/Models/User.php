@@ -42,4 +42,30 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Um usuário poderá ter muitos comentários
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
+
+    /**
+     * Um usuário poderá ter muitos conteúdos publicados
+     */
+    public function content()
+    {
+        return $this->hasMany('App\Models\Content');
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany('App\Models\Content', 'likes', 'user_id', 'content_id');
+    }
+
+    public function friends()
+    {
+        return $this->belongsToMany('App\Models\User', 'friends', 'user_id', 'friend_id');
+    }
 }

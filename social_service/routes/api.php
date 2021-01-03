@@ -21,5 +21,17 @@ Route::prefix('v1/users')->namespace('App\Http\Controllers\Api')->group(function
 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::put('perfil', 'UserController@updatePerfilUser')->name('updatePerfilUser');
+
+        Route::prefix('content')->group(function(){
+            Route::post('', 'UserController@contentCreate')->name('contentCreate');
+        });
+
+        Route::prefix('friend')->group(function(){
+            Route::post('', 'UserController@friendCreate')->name('friendCreate');
+        });
+
+        Route::prefix('like')->group(function(){
+            Route::post('', 'UserController@userLikes')->name('userLikes');
+        });
     });
 });

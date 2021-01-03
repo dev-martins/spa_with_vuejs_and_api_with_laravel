@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Content;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,5 +97,43 @@ class UserController extends Controller
         if (Storage::disk('public')->exists("./perfils/perfil_id/{$user->id}/")) {
             Storage::disk('public')->delete("./perfils/perfil_id/{$user->id}/{$image[$index]}");
         };
+    }
+
+    public function contentCreate(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $user->content()->create($request->all());
+
+            return response()->json($user->content, 201);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function friendCreate(Request $request)
+    {
+        try {
+
+            $user = $request->user();
+            $user->friends()->toggle($request->friend_id);
+
+            return response()->json($user->friends, 200);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function userLikes(Request $request)
+    {
+        try {
+            $content = Content::find($request->content_id);
+            $user = $request->user();
+            $user->likes()->toggle($request->content_id);
+
+            return response()->json($content->likes()->count(), 200);//->toSql()
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
     }
 }

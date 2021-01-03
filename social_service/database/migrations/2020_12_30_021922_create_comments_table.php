@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('content_id');
             $table->foreign('content_id')->references('id')->on('contents')->onDelete('cascade');
-            $table->longText('content')->default('text');
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }

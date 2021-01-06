@@ -25,9 +25,9 @@ class UserController extends Controller
                 $user->token = $user->createToken($user->email)->accessToken;
                 return response()->json($user, 200);
             }
-            return response()->json(["msg" => "Credenciais inválidas"], 401);
+            return response()->json(["errors" => ["Credenciais inválidas"]], 401);
         } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), 500);
+            return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
 
@@ -40,7 +40,7 @@ class UserController extends Controller
             $user->token = $user->createToken($user->email)->accessToken;
             return response()->json($user, 201);
         } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), 500);
+            return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
 
@@ -66,7 +66,7 @@ class UserController extends Controller
             $user->token = $user->createToken($user->email)->accessToken;
             return response()->json($user, 200);
         } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), 500);
+            return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
 
@@ -107,7 +107,7 @@ class UserController extends Controller
 
             return response()->json($user->content, 201);
         } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), 500);
+            return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
 
@@ -120,7 +120,7 @@ class UserController extends Controller
 
             return response()->json($user->friends, 200);
         } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), 500);
+            return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
 
@@ -131,9 +131,22 @@ class UserController extends Controller
             $user = $request->user();
             $user->likes()->toggle($request->content_id);
 
-            return response()->json($content->likes()->count(), 200);//->toSql()
+            return response()->json($content->likes()->count(), 200);
         } catch (\Throwable $th) {
-            return response()->json($th->getMessage(), 500);
+            return response()->json(["errors" => [$th->getMessage()]], 500);
+        }
+    }
+
+    public function userComments(Request $request)
+    {
+        try {
+            $content = Content::find($request->content_id);
+            $user = $request->user();
+            $user->comments()->create($request->all());
+
+            return response()->json($content->comments(), 200);
+        } catch (\Throwable $th) {
+            return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
 }

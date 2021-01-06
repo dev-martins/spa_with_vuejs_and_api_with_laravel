@@ -55,7 +55,6 @@ import CardContentVue from "@/components/social/CardContentVue.vue";
 import CardDetalhesVue from "@/components/social/CardDetalhesVue.vue";
 import PublicContentVue from "@/components/social/PublicContentVue.vue";
 
-import axios from "axios";
 import Vue from "vue";
 import VueToast from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
@@ -107,8 +106,8 @@ export default {
       };
       this.removeEmptyAttribute(data);
 
-      axios
-        .put(`http://127.0.0.1:8000/api/v1/users/perfil`, data, {
+      this.$http
+        .put(`${this.$ApiUrl}api/v1/users/perfil`, data, {
           headers: {
             Accept: "application/json",
             Authorization: `Bearer ${this.user.token}`,

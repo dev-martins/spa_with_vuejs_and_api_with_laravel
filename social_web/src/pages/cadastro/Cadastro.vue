@@ -48,7 +48,6 @@ import CardContentVue from "@/components/social/CardContentVue.vue";
 import CardDetalhesVue from "@/components/social/CardDetalhesVue.vue";
 import PublicContentVue from "@/components/social/PublicContentVue.vue";
 
-import axios from "axios";
 import Vue from "vue";
 import VueToast from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
@@ -74,8 +73,8 @@ export default {
   },
   methods: {
     register: function () {
-      axios
-        .post(`http://127.0.0.1:8000/api/v1/users`, {
+      this.$http
+        .post(`${this.$ApiUrl}api/v1/users`, {
           name: this.name,
           email: this.email,
           password: this.password,

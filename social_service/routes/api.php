@@ -33,5 +33,9 @@ Route::prefix('v1/users')->namespace('App\Http\Controllers\Api')->group(function
         Route::prefix('like')->group(function(){
             Route::post('', 'UserController@userLikes')->name('userLikes');
         });
+
+        Route::prefix('comment')->group(function(){
+            Route::post('', 'UserController@userComments')->name('userComments');
+        });
     });
 });

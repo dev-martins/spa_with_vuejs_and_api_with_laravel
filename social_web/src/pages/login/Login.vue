@@ -47,7 +47,6 @@ import CardContentVue from "@/components/social/CardContentVue.vue";
 import CardDetalhesVue from "@/components/social/CardDetalhesVue.vue";
 import PublicContentVue from "@/components/social/PublicContentVue.vue";
 
-import axios from "axios";
 import Vue from "vue";
 import VueToast from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
@@ -72,8 +71,8 @@ export default {
   methods: {
     
     login: function () {
-      axios
-        .post(`http://127.0.0.1:8000/api/v1/users/login`, {
+      this.$http
+        .post(`${this.$ApiUrl}api/v1/users/login`, {
           email: this.email,
           password: this.password,
         })
@@ -87,11 +86,14 @@ export default {
           });
         })
         .catch((e) => {
-          Vue.$toast.open({
-            message: e.response.data.msg,
-            type: "error",
-            position: "top-right",
-          });
+          let resp = e.response.data.errors;
+          for (let key in resp) {
+            Vue.$toast.open({
+              message: resp[key],
+              type: "error",
+              position: "top-right",
+            });
+          }
         });
     },
   },

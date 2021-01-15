@@ -77,7 +77,8 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          sessionStorage.setItem("user", JSON.stringify(response.data));
+          sessionStorage.setItem("user", response.data);
+          this.$store.commit('setUser',response.data);
           this.$router.push('/');
           Vue.$toast.open({
             message: `Bem vindo ${response.data.name}!`,

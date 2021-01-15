@@ -149,4 +149,5 @@ class UserController extends Controller
             return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
+
 }

@@ -44,14 +44,15 @@ export default {
   },
   methods: {
     getUser: function () {
-      let userAuth = sessionStorage.getItem("user");
+      let userAuth = this.$store.getters.getUser;
       if (userAuth) {
-        this.user = JSON.parse(userAuth);
+        this.user = this.$store.getters.getUser;
       } else {
         this.$router.push("/login");
       }
     },
     sair() {
+      this.$store.commit('setUser',null);
       sessionStorage.clear();
       this.user = false;
       this.$router.push("/login");

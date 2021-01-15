@@ -82,6 +82,7 @@ export default {
         })
         .then((response) => {
           sessionStorage.setItem("user", JSON.stringify(response.data));
+          this.$store.commit('setUser',JSON.stringify(response.data));
           this.$router.push("/");
           Vue.$toast.open({
             message: `${response.data.name} cadastrado com sucesso!`,

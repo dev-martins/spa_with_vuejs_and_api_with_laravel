@@ -86,9 +86,9 @@ export default {
   },
   methods: {
     getUser: function () {
-      let userAuth = sessionStorage.getItem("user");
+      let userAuth = this.$store.getters.getUser;
       if (userAuth) {
-        this.user = JSON.parse(userAuth);
+        this.user = this.$store.getters.getUser;
         this.name = this.user.name;
         this.email = this.user.email;
         this.image = this.user.image;
@@ -115,7 +115,8 @@ export default {
           },
         })
         .then((response) => {
-           sessionStorage.setItem("user", JSON.stringify(response.data));
+           sessionStorage.setItem("user", response.data);
+           this.$store.commit('setUser',response.data);
            Vue.$toast.open({
              message: `${response.data.name} Atualizado com sucesso!`,
              type: "success",

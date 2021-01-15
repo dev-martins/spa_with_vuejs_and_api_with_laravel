@@ -39,14 +39,15 @@ export default {
     };
   },
   mounted() {
-    let userAuth = sessionStorage.getItem("user");
+    let userAuth = this.$store.getters.getUser;
     if (userAuth) {
-      this.user = JSON.parse(userAuth);
+      this.user = this.$store.getters.getUser;
       this.$router.push('/');
     }
   },
   methods:{
     sair(){
+      this.$store.commit('setUser',null);
       sessionStorage.clear();
       this.user = false;
     }

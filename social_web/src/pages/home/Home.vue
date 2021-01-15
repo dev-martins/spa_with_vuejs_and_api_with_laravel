@@ -4,20 +4,21 @@
       <div class="row">
         <GridVue width="4">
           <CardMenuVue background="grey lighten-5 z-depth-1">
-            <GridVue width="4">
-              <img v-if="image" class="circle responsive-img" :src="image" :alt="name" />
+            <GridVue width="4" :key="keyRosource">
+              <img v-if="user.image" class="circle responsive-img" :src="user.image" :alt="user.name" />
               <img v-else class="circle responsive-img" src="@/assets/social/avatar.png" />
               <!-- notice the "circle" class -->
             </GridVue>
             <GridVue width="8">
-              <h5>{{ name }}</h5>
+              <h5>{{ user.name }}</h5>
             </GridVue>
           </CardMenuVue>
         </GridVue>
         <GridVue width="8">
           <div class="row">
             <GridVue class="input-field" width="12">
-              <PublicContentVue />
+              <PublicContentVue>
+              </PublicContentVue>
             </GridVue>
           </div>
           <div class="row">
@@ -62,8 +63,8 @@ export default {
   },
   data() {
     return {
-      name: "",
-      image: "",
+      user:"",
+      keyRosource:0
     };
   },
   mounted() {
@@ -71,11 +72,14 @@ export default {
   },
   methods: {
     getUser: function () {
-      let userAuth = sessionStorage.getItem("user");
+      let userAuth = this.$store.getters.getUser;
       if (userAuth) {
-        this.user = JSON.parse(userAuth);
-        this.name = this.user.name;
-        this.image = this.user.image;
+        this.user = this.$store.getters.getUser;
+
+        /**
+         * tática utilizada para forçar a renderização do componente
+         */
+        this.keyRosource = 1;
       } else {
         this.$router.push("/login");
       }

@@ -5,8 +5,17 @@
         <GridVue width="4">
           <CardMenuVue background="grey lighten-5 z-depth-1">
             <GridVue width="4" :key="keyRosource">
-              <img v-if="user.image" class="circle responsive-img" :src="user.image" :alt="user.name" />
-              <img v-else class="circle responsive-img" src="@/assets/social/avatar.png" />
+              <img
+                v-if="user.image"
+                class="circle responsive-img"
+                :src="user.image"
+                :alt="user.name"
+              />
+              <img
+                v-else
+                class="circle responsive-img"
+                src="@/assets/social/avatar.png"
+              />
               <!-- notice the "circle" class -->
             </GridVue>
             <GridVue width="8">
@@ -17,25 +26,22 @@
         <GridVue width="8">
           <div class="row">
             <GridVue class="input-field" width="12">
-              <PublicContentVue>
-              </PublicContentVue>
+              <PublicContentVue> </PublicContentVue>
             </GridVue>
           </div>
           <div class="row">
-            <GridVue width="12">
-              <CardContentVue
-                image="https://materializecss.com/images/sample-1.jpg"
-                name="Marta Silva"
-                date_publish="28/11/2020 16:40"
+            <CardContentVue
+              image="https://materializecss.com/images/sample-1.jpg"
+              name="Marta Silva"
+              date_publish="28/11/2020 16:40"
+            >
+              <CardDetalhesVue
+                image_content="https://materializecss.com/images/sample-1.jpg"
+                content_title="Lorem ipsum dolor sit amet"
+                content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas venenatis ligula sit amet luctus. Ut consequat non turpis ac tincidunt."
               >
-                <CardDetalhesVue
-                  image_content="https://materializecss.com/images/sample-1.jpg"
-                  content_title="Lorem ipsum dolor sit amet"
-                  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas venenatis ligula sit amet luctus. Ut consequat non turpis ac tincidunt."
-                >
-                </CardDetalhesVue>
-              </CardContentVue>
-            </GridVue>
+              </CardDetalhesVue>
+            </CardContentVue>
           </div>
         </GridVue>
       </div>
@@ -63,8 +69,8 @@ export default {
   },
   data() {
     return {
-      user:"",
-      keyRosource:0
+      user: "",
+      keyRosource: 0,
     };
   },
   mounted() {

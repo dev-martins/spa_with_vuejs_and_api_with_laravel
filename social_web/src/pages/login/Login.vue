@@ -77,7 +77,7 @@ export default {
           password: this.password,
         })
         .then((response) => {
-          sessionStorage.setItem("user", response.data);
+          sessionStorage.setItem("user", JSON.stringify(response.data));
           this.$store.commit('setUser',response.data);
           this.$router.push('/');
           Vue.$toast.open({

@@ -111,6 +111,17 @@ class UserController extends Controller
         }
     }
 
+    public function contentGet(Request $request)
+    {
+        try {
+            $user = $request->user();
+            $user->content->all();
+            return response()->json($user, 200);
+        } catch (\Throwable $th) {
+            return response()->json(["errors" => [$th->getMessage()]], 500);
+        }
+    }
+
     public function friendCreate(Request $request)
     {
         try {
@@ -149,5 +160,4 @@ class UserController extends Controller
             return response()->json(["errors" => [$th->getMessage()]], 500);
         }
     }
-
 }

@@ -39,6 +39,9 @@ import GridVue from "@/components/GridVue.vue";
 import Vue from "vue";
 import VueToast from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
+
+// mixins
+// import getContent from "@/mixins/requests/getContent.js";
 Vue.use(VueToast);
 
 export default {
@@ -49,16 +52,50 @@ export default {
   },
   data() {
     return {
+      token: "",
       title: "",
       input_content: "",
       link: "",
       url: "",
+      userImage: "",
+      userName: "",
+      contents: [],
     };
   },
   mounted() {
-
+    this.getToken();
+    this.getContent();
   },
   methods: {
+    getToken() {
+      this.token = this.$store.getters.getUser.token;
+    },
+    getContent() {
+      this.$http
+        .get(`${this.$ApiUrl}api/v1/users/content`, {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${this.token}`,
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          this.$store.commit("setContent", response.data.content);
+          this.contents = this.$store.getters.getContent;
+          this.userImage = response.data.image;
+          this.userName = response.data.name;
+        })
+        .catch((e) => {
+          let resp = e.response.data.errors;
+          for (let key in resp) {
+            Vue.$toast.open({
+              message: resp[key],
+              type: "error",
+              position: "top-right",
+            });
+          }
+        });
+    },
     registerContent() {
       this.$http
         .post(
@@ -83,27 +120,27 @@ export default {
             type: "success",
             position: "top-right",
           });
+          this.getContent();
         })
         .catch((e) => {
-             let resp = e.response.data.errors;
-           let msg = e.response.data.message;
-          
+          let resp = e.response.data.errors;
+          let msg = e.response.data.message;
 
-           for (let key in resp) {
-             Vue.$toast.open({
-               message: resp[key],
-               type: "error",
-               position: "top-right",
-             });
-           }
+          for (let key in resp) {
+            Vue.$toast.open({
+              message: resp[key],
+              type: "error",
+              position: "top-right",
+            });
+          }
 
-           for (let key in msg) {
-             Vue.$toast.open({
-               message: msg[key],
-               type: "error",
-               position: "top-right",
-             });
-           }
+          for (let key in msg) {
+            Vue.$toast.open({
+              message: msg[key],
+              type: "error",
+              position: "top-right",
+            });
+          }
         });
     },
   },

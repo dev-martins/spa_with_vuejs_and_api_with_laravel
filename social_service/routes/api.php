@@ -20,21 +20,24 @@ Route::prefix('v1/users')->namespace('App\Http\Controllers\Api')->group(function
     Route::post('', 'UserController@registerUser')->name('registerUser');
 
     Route::group(['middleware' => ['auth:api']], function () {
+
         Route::put('perfil', 'UserController@updatePerfilUser')->name('updatePerfilUser');
 
-        Route::prefix('content')->group(function(){
+        Route::group(['prefix' => 'content'], function () {
+            Route::get('', 'UserController@contentGet')->name('contentGet');
             Route::post('', 'UserController@contentCreate')->name('contentCreate');
         });
 
-        Route::prefix('friend')->group(function(){
+
+        Route::prefix('friend')->group(function () {
             Route::post('', 'UserController@friendCreate')->name('friendCreate');
         });
 
-        Route::prefix('like')->group(function(){
+        Route::prefix('like')->group(function () {
             Route::post('', 'UserController@userLikes')->name('userLikes');
         });
 
-        Route::prefix('comment')->group(function(){
+        Route::prefix('comment')->group(function () {
             Route::post('', 'UserController@userComments')->name('userComments');
         });
     });

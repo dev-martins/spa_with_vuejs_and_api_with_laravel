@@ -4,7 +4,7 @@
       <div class="row">
         <GridVue width="4">
           <CardMenuVue background="grey lighten-5 z-depth-1">
-            <GridVue width="4" :key="keyRosource">
+            <GridVue width="4">
               <img
                 v-if="user.image"
                 class="circle responsive-img"
@@ -30,17 +30,8 @@
             </GridVue>
           </div>
           <div class="row">
-            <CardContentVue
-              image="https://materializecss.com/images/sample-1.jpg"
-              name="Marta Silva"
-              date_publish="28/11/2020 16:40"
-            >
-              <CardDetalhesVue
-                image_content="https://materializecss.com/images/sample-1.jpg"
-                content_title="Lorem ipsum dolor sit amet"
-                content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec egestas venenatis ligula sit amet luctus. Ut consequat non turpis ac tincidunt."
-              >
-              </CardDetalhesVue>
+            <CardContentVue>
+              
             </CardContentVue>
           </div>
         </GridVue>
@@ -54,7 +45,6 @@ import SiteLayout from "@/layouts/SiteLayout.vue";
 import GridVue from "@/components/GridVue.vue";
 import CardMenuVue from "@/components/CardMenuVue.vue";
 import CardContentVue from "@/components/social/CardContentVue.vue";
-import CardDetalhesVue from "@/components/social/CardDetalhesVue.vue";
 import PublicContentVue from "@/components/social/PublicContentVue.vue";
 
 export default {
@@ -64,13 +54,11 @@ export default {
     GridVue,
     CardMenuVue,
     CardContentVue,
-    CardDetalhesVue,
     PublicContentVue,
   },
   data() {
     return {
-      user: "",
-      keyRosource: 0,
+      user: false,
     };
   },
   mounted() {
@@ -81,11 +69,6 @@ export default {
       let userAuth = this.$store.getters.getUser;
       if (userAuth) {
         this.user = this.$store.getters.getUser;
-
-        /**
-         * tática utilizada para forçar a renderização do componente
-         */
-        this.keyRosource = 1;
       } else {
         this.$router.push("/login");
       }

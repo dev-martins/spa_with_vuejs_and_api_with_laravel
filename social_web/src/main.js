@@ -14,16 +14,23 @@ Vue.prototype.$ApiUrl = 'http://127.0.0.1:8000/';
 
 const store = new Vuex.Store({
   state: {
-    user: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null
+    user: sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : null,
+    content: [],
   },
   getters:{
     getUser: state => {
       return state.user
     },
+    getContent: state => {
+      return  state.content
+    }
   },
   mutations: {
     setUser(state,n){
       state.user = n
+    },
+    setContent(state,n){
+      state.content = n
     }
   }
 })
